@@ -4,26 +4,23 @@ namespace App\Form;
 
 use App\Entity\Achat;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Category;
 
 class AchatType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('name', TextType::class)
-//            ->add('price', MoneyType::class)
-//            ->add('isBuy', ChoiceType::class)
-//            ->add('url', UrlType::class)
             ->add('name')
             ->add('price')
             ->add('isBuy')
             ->add('url')
+//            ->add('category', EntityType::class, [
+//                'class' => Category::class,
+//            ])
         ;
     }
 
@@ -31,6 +28,7 @@ class AchatType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Achat::class,
+            'allow_extra_fields' => true
         ]);
     }
 }

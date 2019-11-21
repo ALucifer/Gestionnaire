@@ -3,11 +3,12 @@ import clientAchat from '../client/achat';
 export default {
     namespaced: true,
     state: {
-        achats: []
+        achats: [],
+        filteredAchats: []
     },
     getters: {
-        achats(state) {
-            return state.achats.filter(achat => achat.name == "test");
+        filteredAchats(state) {
+            return state.filteredAchats;
         },
         total(state) {
             let result = 0;
@@ -19,26 +20,33 @@ export default {
         }
     },
     mutations: {
-        ['FETCHING_SUCCESS'](state, achats) {
+        fetching_success(state, achats) {
             state.achats = achats;
+            state.filteredAchats = achats;
         },
-        ['REMOVE_ITEM'](state, item) {
+        remove_item(state, item) {
             const index = state.achats.indexOf(item);
-            state.achats.splice(index, 1);
+            state.filteredAchats.splice(index, 1);
         },
-        ['ADD_ITEM'](state, item) {
-            state.achats.unshift(item);
+        add_item(state, item) {
+            state.filteredAchats.unshift(item);
+        },
+        filter(state, name) {
+            state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name))
         }
     },
     actions: {
         removeItem({ commit }, item) {
-            return clientAchat.delete(item).then(() => commit('REMOVE_ITEM', item));
+            return clientAchat.delete(item).then(() => commit('remove_item', item));
         },
         addItem({ commit }, item) {
-            return clientAchat.create(item).then(res => commit('ADD_ITEM', res.data)); // todo: cote api faire le retour de l'object
+            return clientAchat.create(item).then(res => commit('add_item', res.data)); // todo: cote api faire le retour de l'object
         },
         fetchAll({ commit }) {
-            return clientAchat.getAll().then(res => commit('FETCHING_SUCCESS', res.data))
+            return clientAchat.getAll().then(res => commit('fetching_success', res.data))
+        },
+        filter({ commit }, name) {
+            commit('filter', name);
         }
     }
 }

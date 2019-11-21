@@ -10,8 +10,8 @@
           </b-button>
           <AddAchat />
         </b-col>
-        <b-col cols="6">
-          <TotalAchat />
+        <b-col cols="9">
+          <StatsAchat />
         </b-col>
       </b-row>
     </b-container>
@@ -21,7 +21,7 @@
 <script>
 import AddAchat from "../projects/listAchats/components/AddAchat";
 import ListGlobal from "../projects/listAchats/components/ListGlobal";
-import TotalAchat from "../projects/listAchats/components/Total";
+import StatsAchat from "../projects/listAchats/components/StatsTotal";
 import SearchModal from "../projects/listAchats/components/SearchModal.vue";
 
 export default {
@@ -29,7 +29,7 @@ export default {
   components: {
     AddAchat,
     ListGlobal,
-    TotalAchat,
+    StatsAchat,
     SearchModal
   },
   created() {

@@ -3,6 +3,7 @@ namespace App\Controller\Utils\Form;
 
 
 use App\Entity\Achat;
+use App\Entity\Category;
 use App\Form\AchatType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -32,11 +33,16 @@ class FormValidateur
         $form = $this->formFactory->create(AchatType::class, $achat);
 
         $data = json_decode($request->getContent(), true);
+
+        $category = $this->em->getRepository(Category::class)->findOneBy(['label'=> $data['category']['label']]);
+        if($category) {
+            $this->em->persist($category);
+        }
+
         $form->submit($data);
-
         if($form->isSubmitted() && $form->isValid()) {
-
             $data = $form->getData();
+            $data->setCategory($category);
 
             $this->em->persist($data);
             $this->em->flush();

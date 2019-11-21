@@ -17,8 +17,9 @@
   .slide-up-enter {
     transform: translateY(10px); /* start 10px down*/
     opacity: 0;
+    transition: all 0.7s ease-out;
   }
   
   .slide-up-enter-active {
-    transition: all 0.5s ease;
+    transition: all 0.7s ease-in-out;
   }

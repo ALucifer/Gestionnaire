@@ -1,12 +1,22 @@
 <template>
   <div>
-    <b-form-input placeholder="Rechercher un achat"></b-form-input>
+    <b-form-input v-model="searchText" placeholder="Rechercher un achat" @keyup="search"></b-form-input>
   </div>
 </template>
 
 <script>
 export default {
-  name: "SearchModal"
+  name: "SearchModal",
+  data() {
+    return {
+      searchText: ""
+    };
+  },
+  methods: {
+    search() {
+      this.$store.dispatch("achats/filter", this.searchText);
+    }
+  }
 };
 </script>
 

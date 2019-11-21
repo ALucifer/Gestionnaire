@@ -1,6 +1,6 @@
 <template>
   <transition-group name="slide-up">
-    <div v-for="item in list" class="w-100" :key="item">
+    <div v-for="item in filteredAchats" class="w-100" :key="item">
       <AchatCard v-bind:achat="item" />
     </div>
   </transition-group>
@@ -18,8 +18,8 @@ export default {
     this.$store.dispatch("achats/fetchAll");
   },
   computed: {
-    list() {
-      return this.$store.getters["achats/achats"];
+    filteredAchats() {
+      return this.$store.getters["achats/filteredAchats"];
     }
   }
 };

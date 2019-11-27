@@ -9,7 +9,7 @@ let router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/list-achat', component: ListAchat },
-        { path: '*', redirect: '/calculatrice' }
+        { path: '*', redirect: '/list-achat'}
     ],
 });
 

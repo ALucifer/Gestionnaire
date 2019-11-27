@@ -1,5 +1,5 @@
 <template>
-  <div class="event-card -shadow">
+  <div class="event-card -shadow" @click="edit">
     <b-container class="bv-row">
       <b-row class>
         <p class="achat-name">{{ achat.name }}</p>
@@ -18,6 +18,9 @@ export default {
   methods: {
     remove() {
       this.$store.dispatch("achats/removeItem", this.achat);
+    },
+    edit() {
+      alert('edit');
     }
   }
 };

@@ -1,7 +1,9 @@
 <template>
-  <div class="small">
-    <Doughnut :data="chartData" :options="chartOptions"></Doughnut>
-  </div>
+  <b-row align-h="center">
+    <b-col cols="12" class="small">
+      <Doughnut :data="chartData" :options="chartOptions"></Doughnut>
+    </b-col>
+  </b-row>
 </template>
 
 <script>

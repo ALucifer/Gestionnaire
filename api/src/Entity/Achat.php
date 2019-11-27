@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AchatRepository")
@@ -37,7 +38,7 @@ class Achat
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="achats")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="achats", fetch="EAGER")
      */
     private $category;
 

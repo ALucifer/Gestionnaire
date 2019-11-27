@@ -23,7 +23,7 @@ class Category
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Achat", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Achat", mappedBy="category", fetch="LAZY")
      */
     private $achats;
 

@@ -6,6 +6,7 @@ use App\Repository\AchatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class AchatController
@@ -24,7 +25,16 @@ class AchatController extends AbstractController
      */
     public function index(AchatRepository $repository)
     {
-        return $this->json($repository->findAll());
+        return $this->json(
+            $repository->findAll(),
+            200,
+            [],
+            [
+                'circular_reference_handler' => function ($object) {
+                    return $object->getId();
+                }
+            ]
+        );
     }
 
     /**

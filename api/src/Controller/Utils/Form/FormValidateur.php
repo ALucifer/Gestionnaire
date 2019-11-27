@@ -34,10 +34,7 @@ class FormValidateur
 
         $data = json_decode($request->getContent(), true);
 
-        $category = $this->em->getRepository(Category::class)->findOneBy(['label'=> $data['category']['label']]);
-        if($category) {
-            $this->em->persist($category);
-        }
+        $category = $this->saveCategory($data);
 
         $form->submit($data);
         if($form->isSubmitted() && $form->isValid()) {
@@ -65,5 +62,19 @@ class FormValidateur
 
         $this->em->remove($achat);
         $this->em->flush();
+    }
+
+    private function saveCategory($data)
+    {
+        if(isset($data['category'])) {
+            $category = $this->em->getRepository(Category::class)->findOneBy(['label'=> $data['category']['label']]);
+            if(!$category) {
+                $category = new Category();
+                $category->setLabel($data['category']['label']);
+                $this->em->persist($category);
+            }
+            return $category;
+        }
+        return null;
     }
 }

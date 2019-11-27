@@ -1,6 +1,6 @@
 <template>
   <transition-group name="slide-up">
-    <div v-for="item in filteredAchats" class="w-100" :key="item">
+    <div v-for="item in filteredAchats" class="w-100" :key="item.id">
       <AchatCard v-bind:achat="item" />
     </div>
   </transition-group>

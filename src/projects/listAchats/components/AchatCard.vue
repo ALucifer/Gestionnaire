@@ -1,9 +1,16 @@
 <template>
   <div class="event-card -shadow" @click="edit">
     <b-container class="bv-row">
-      <b-row class>
+      <b-row>
         <p class="achat-name">{{ achat.name }}</p>
         <div class="achat-price">{{ achat.price }} €</div>
+      </b-row>
+      <b-row>
+        <b-badge v-if="achat.category" pill variant="primary">{{ achat.category.label }}</b-badge>
+        <v-icon v-if="!achat.category" name="alert-circle" class="warning-no-category" id="tooltip-nc"></v-icon>
+        <b-tooltip target="tooltip-nc" triggers="hover">
+          Attention, cet achat n'a pas de catégorie
+        </b-tooltip>
       </b-row>
     </b-container>
   </div>
@@ -53,6 +60,11 @@ export default {
   background-color: #ffeed9;
   padding: 5px;
   border-radius: 5px;
+}
+
+.warning-no-category {
+  width: 25px;
+  color: #FFD33F;
 }
 .icon-minus-2 {
   width: 13px;

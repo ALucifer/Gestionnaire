@@ -1,29 +1,19 @@
-import clientAchat from '../client/achat';
-import lodash from 'lodash';
+import clientAchat from '../services/client/achat';
+import randomcolor from 'randomcolor';
 
 export default {
     namespaced: true,
     state: {
         achats: [],
+        categories: [],
         filteredAchats: []
     },
     getters: {
         filteredAchats(state) {
             return state.filteredAchats;
         },
-        getStatistiques(state) {
-            return state.filteredAchats.reduce((acc, cur) => {
-                acc['labels'] = [];
-                acc['total'] = [];
-
-                if (!(cur.category.label in acc['labels'])) {
-                    acc['labels'].push(cur.category.label);
-                }
-
-                // acc[cur.category.label].push(cur);
-
-                return acc;
-            }, {});
+        categories(state) {
+            return state.categories;
         },
         total(state) {
             let result = 0;
@@ -34,9 +24,10 @@ export default {
         }
     },
     mutations: {
-        fetching_success(state, achats) {
-            state.achats = achats;
-            state.filteredAchats = achats;
+        fetching_success(state, data) {
+            state.achats = data.achats;
+            state.categories = data.categories;
+            state.filteredAchats = data.achats;
         },
         remove_item(state, item) {
             const index = state.achats.indexOf(item);
@@ -44,6 +35,7 @@ export default {
         },
         add_item(state, item) {
             state.filteredAchats.unshift(item);
+            return item;
         },
         filter(state, name) {
             state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name))
@@ -54,7 +46,9 @@ export default {
             return clientAchat.delete(item).then(() => commit('remove_item', item));
         },
         addItem({ commit }, item) {
-            return clientAchat.create(item).then(res => commit('add_item', res.data));
+            return clientAchat.create(item)
+                .then(res => commit('add_item', res.data))
+                .then((achat) => commit('statistiques/add_achat', achat));
         },
         fetchAll({ commit }) {
             return clientAchat.getAll().then(res => commit('fetching_success', res.data))

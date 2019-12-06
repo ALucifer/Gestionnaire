@@ -21,24 +21,19 @@
 <script>
 import AddAchat from "../projects/listAchats/components/AddAchat";
 import ListGlobal from "../projects/listAchats/components/ListGlobal";
-import StatsAchat from "../projects/listAchats/components/StatsTotal";
 import SearchModal from "../projects/listAchats/components/SearchModal.vue";
+import StatsAchat from "../projects/listAchats/components/StatsTotal"
 
 export default {
   name: "AchatList",
   components: {
     AddAchat,
     ListGlobal,
-    StatsAchat,
-    SearchModal
+    SearchModal,
+    StatsAchat
   },
   created() {
     this.$store.dispatch("achats/fetchAll");
-  },
-  computed: {
-    achats() {
-      return this.$store.getters["achats/achats"];
-    }
   }
 };
 </script>

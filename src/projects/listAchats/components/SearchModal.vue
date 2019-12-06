@@ -1,6 +1,11 @@
 <template>
   <div>
-    <b-form-input v-model="searchText" placeholder="Rechercher un achat" @keyup="search" class="inputSearch"></b-form-input>
+    <b-form-input
+            v-model="searchText"
+            placeholder="Rechercher un achat"
+            @keyup="search"
+            class="inputSearch">
+    </b-form-input>
   </div>
 </template>
 

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -21,11 +22,6 @@ class Category
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $label;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Achat", mappedBy="category", fetch="LAZY")
-     */
-    private $achats;
 
     public function __construct()
     {
@@ -47,29 +43,5 @@ class Category
         $this->label = $label;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAchats()
-    {
-        return $this->achats;
-    }
-
-    /**
-     * @param mixed $achats
-     * @return Category
-     */
-    public function setAchats($achats)
-    {
-        $this->achats = $achats;
-        return $this;
-    }
-
-    public function addAchat(Achat $achat)
-    {
-        $this->achats[] = $achat;
-        return $this->achats;
     }
 }

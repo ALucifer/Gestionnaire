@@ -38,7 +38,7 @@ class Achat
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="achats", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="achats", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     private $category;
 

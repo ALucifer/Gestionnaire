@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\Utils\Form\FormValidateur;
 use App\Repository\AchatRepository;
+use App\Repository\CategoryRepository;
+use App\Services\StatistiqueService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,13 +22,14 @@ class AchatController extends AbstractController
      * @Route("", name="index", methods={"GET"})
      *
      * @param AchatRepository $repository
+     * @param CategoryRepository $categoryRepository
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function index(AchatRepository $repository)
+    public function index(AchatRepository $repository, CategoryRepository $categoryRepository)
     {
         return $this->json(
-            $repository->findAll(),
+            ['achats' => $repository->findAll(), 'categories' => $categoryRepository ->findAll()],
             200,
             [],
             [
@@ -63,5 +66,13 @@ class AchatController extends AbstractController
     {
         $formValidateur->delete($id);
         return $this->json(['message' => 'resource deleted']);
+    }
+
+    /**
+     * @Route("/statistiques", name="statistiques", methods={"GET"})
+     */
+    public function statistiqueAchat(StatistiqueService $service)
+    {
+        return $this->json($service->getGlobalStatistique());
     }
 }

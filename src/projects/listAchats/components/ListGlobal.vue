@@ -14,9 +14,6 @@ export default {
   components: {
     AchatCard
   },
-  created() {
-    this.$store.dispatch("achats/fetchAll");
-  },
   computed: {
     filteredAchats() {
       return this.$store.getters["achats/filteredAchats"];

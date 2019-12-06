@@ -32,8 +32,7 @@ class FormValidateur
         $achat = new Achat();
         $form = $this->formFactory->create(AchatType::class, $achat);
 
-        $data = json_decode($request->getContent(), true);
-
+        $data = json_decode($request->getContent(), true)['form'];
         $category = $this->saveCategory($data);
 
         $form->submit($data);
@@ -67,10 +66,11 @@ class FormValidateur
     private function saveCategory($data)
     {
         if(isset($data['category'])) {
-            $category = $this->em->getRepository(Category::class)->findOneBy(['label'=> $data['category']['label']]);
+            $category = $this->em->getRepository(Category::class)->findOneBy(['label'=> $data['category']]);
+
             if(!$category) {
                 $category = new Category();
-                $category->setLabel($data['category']['label']);
+                $category->setLabel($data['category']);
                 $this->em->persist($category);
             }
             return $category;

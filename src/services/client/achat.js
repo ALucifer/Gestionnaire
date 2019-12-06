@@ -12,5 +12,8 @@ export default {
     },
     delete(achat) {
         return axios.delete('achats' + achat.id);
+    },
+    statistiques() {
+        return axios.get('achats/statistiques');
     }
 }

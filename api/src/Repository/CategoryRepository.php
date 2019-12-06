@@ -19,6 +19,16 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getStatistiques()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.label')
+            ->addSelect('(select sum(a.price) from App\Entity\Achat a where a.category = c.id) as total')
+            ->groupBy('c.label')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

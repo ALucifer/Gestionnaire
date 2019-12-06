@@ -12,6 +12,9 @@ export default {
         },
         url: {
             url, required
+        },
+        category: {
+            required
         }
     }
 }

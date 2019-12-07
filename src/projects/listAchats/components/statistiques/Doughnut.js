@@ -2,6 +2,7 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
+  props: ['chartData'],
   data () {
     return {
       options: {
@@ -14,10 +15,14 @@ export default {
   async mounted() {
     await this.$store.dispatch('statistiques/fetchStatistiques')
     const stats = await this.$store.getters['statistiques/get_statistiques'];
+
     var chartData = {
       labels: stats.labels,
       datasets: [stats.datasets]
+    };
+
+    if(stats.labels) {
+      this.renderChart(chartData, this.options)
     }
-    this.renderChart(chartData, this.options)
   }
 };

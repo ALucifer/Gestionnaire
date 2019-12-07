@@ -10,7 +10,8 @@
                     id="name"
                     :type="'text'"
                     placeholder="Nom"
-                    class="my-1"></b-form-input>
+                    class="my-1">
+            </b-form-input>
             <div class="error" v-if="submitted && !$v.form.name.required">Champs requis</div>
             <div class="error" v-if="submitted && !$v.form.name.minLength">Name must have at least {{$v.form.name.$params.minLength.min}} letters.</div>
             <b-input-group append="€">
@@ -32,7 +33,8 @@
                     id="url"
                     :type="'url'"
                     placeholder="Url"
-                    class="my-1"></b-form-input>
+                    class="my-1">
+            </b-form-input>
             <div class="error" v-if="submitted && !$v.form.url.required">Champs requis</div>
             <BSelectItem
                     :items="categories"
@@ -85,7 +87,7 @@ export default {
     }
   },
   methods: {
-    onSubmit(event) {
+    onSubmit() {
       this.submitted = true;
       this.$v.form.$touch();
 
@@ -93,7 +95,18 @@ export default {
         let data = { ...this.$data };
         this.$store.dispatch('achats/addItem', data);
         this.$root.$emit("bv::hide::modal", "addAchat", "#btnAdd");
+        this.toast(data.form)
       }
+    },
+    toast(achat) {
+      var title = "Ajout d'un nouvel achat !";
+      var content = `L'achat : ${achat.name} à été ajouté à votre liste des achats au prix de ${achat.price} €.`
+      this.$bvToast.toast(content, {
+        title: title,
+        autoHideDelay: 10000,
+        appendToast: true,
+        variant: 'success'
+      })
     }
   }
 };

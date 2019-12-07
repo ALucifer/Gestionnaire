@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row>
         <b-col cols="3">
-          <SearchModal />
+          <SearchModal class="m-3" />
           <ListGlobal />
           <b-button variant="success" v-b-modal="'addAchat'">
             <v-icon name="plus" class="icon-minus plus"></v-icon>
@@ -21,23 +21,18 @@
 <script>
 import AddAchat from "../projects/listAchats/components/AddAchat";
 import ListGlobal from "../projects/listAchats/components/ListGlobal";
-import SearchModal from "../projects/listAchats/components/SearchModal.vue";
+import SearchModal from "../projects/listAchats/components/InputSearch.vue";
 import StatsAchat from "../projects/listAchats/components/StatsTotal"
 
 export default {
   name: "AchatList",
-  components: {
-    AddAchat,
-    ListGlobal,
-    SearchModal,
-    StatsAchat
-  },
+  components: {AddAchat, ListGlobal, SearchModal, StatsAchat},
   created() {
     this.$store.dispatch("achats/fetchAll");
   }
 };
 </script>
 
-<style scoped>
+<style>
 @import "../assets/css/achatList.css";
 </style>

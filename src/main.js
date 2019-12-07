@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Vuelidate from 'vuelidate';
 import feather from 'vue-icon';
+import axios from 'axios';
 
 Vue.config.productionTip = false;
 
@@ -17,5 +18,23 @@ Vue.use(feather, 'v-icon');
 new Vue({
   render: h => h(App),
   router: router,
-  store: store
+  store: store,
+  created () {
+    const token = localStorage.getItem('token')
+    if (token) {
+      const userData = JSON.parse(token)
+      this.$store.commit('security/set_user_data', userData)
+    }
+
+    axios.interceptors.response.use(
+        response => response,
+        error => {
+          if (error.response.status === 401) {
+            this.$store.dispatch('security/logout');
+            this.$router.push('/login');
+          }
+          return Promise.reject(error)
+        }
+    )
+  },
 }).$mount('#app');

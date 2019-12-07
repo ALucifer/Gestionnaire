@@ -1,4 +1,4 @@
-import clientAchat from '../services/client/achat'
+import statistiquesClient from '../services/client/statistiques'
 
 export default {
     namespaced: true,
@@ -22,15 +22,12 @@ export default {
         fetch_success(state, data) {
             state.statistiques = data;
             state.isLoad = true
-        },
-        add_achat(state, data){
-            console.log(data)
         }
     },
     actions: {
          async fetchStatistiques({ commit }) {
             commit('fetch_statistiques');
-            return await clientAchat.statistiques()
+            return await statistiquesClient.statistiquesAchatsByCategory()
                 .then(res => commit('fetch_success', res.data))
         }
     }

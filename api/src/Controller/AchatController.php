@@ -5,6 +5,7 @@ use App\Controller\Utils\Form\FormValidateur;
 use App\Repository\AchatRepository;
 use App\Repository\CategoryRepository;
 use App\Services\StatistiqueService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,8 @@ use Symfony\Component\Serializer\SerializerInterface;
  * Class AchatController
  * @package App\Controller
  *
- * @Route("/achats", name="achat_")
+ * @Route("/api/achats", name="achat_")
+ * @IsGranted("ROLE_USER")
  */
 class AchatController extends AbstractController
 {
@@ -66,13 +68,5 @@ class AchatController extends AbstractController
     {
         $formValidateur->delete($id);
         return $this->json(['message' => 'resource deleted']);
-    }
-
-    /**
-     * @Route("/statistiques", name="statistiques", methods={"GET"})
-     */
-    public function statistiqueAchat(StatistiqueService $service)
-    {
-        return $this->json($service->getGlobalStatistique());
     }
 }

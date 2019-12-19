@@ -1,27 +1,17 @@
 import clientAchat from '../services/client/achat';
-import randomcolor from 'randomcolor';
 
 export default {
     namespaced: true,
     state: {
         achats: [],
+        filteredAchats: [],
         categories: [],
-        filteredAchats: []
+        filter: '',
     },
     getters: {
-        filteredAchats(state) {
-            return state.filteredAchats;
-        },
-        categories(state) {
-            return state.categories;
-        },
-        total(state) {
-            let result = 0;
-            state.achats.forEach(item => {
-                result += item.price;
-            })
-            return result;
-        }
+        categories(state) {return state.categories},
+        achats(state){return state.achats},
+        filteredAchats(state){return state.filteredAchats},
     },
     mutations: {
         fetching_success(state, data) {
@@ -31,17 +21,31 @@ export default {
         },
         remove_item(state, item) {
             const index = state.achats.indexOf(item);
-            state.filteredAchats.splice(index, 1);
+            state.achats.splice(index,1);
         },
         add_item(state, item) {
-            state.filteredAchats.unshift(item);
+            state.achats.unshift(item);
             return item;
         },
-        filter(state, name) {
-            state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name))
+        filtreList(state, name) {
+            if (!(name) || name === '{}') {
+                state.filter = null;
+                state.filteredAchats = null;
+            } else {
+                state.filter = name;
+                state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name));
+            }
+           /* state.filter = name;
+            var test = state.achats.filter(a => new RegExp(name).test(a.name));
+            console.log(name,test)*/
+
+            //state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name))
         }
     },
     actions: {
+        fetchAll({ commit }) {
+            return clientAchat.getAll().then(res => commit('fetching_success', res.data))
+        },
         removeItem({ commit }, item) {
             return clientAchat.delete(item).then(() => commit('remove_item', item));
         },
@@ -50,11 +54,8 @@ export default {
                 .then(res => commit('add_item', res.data))
                 .then((achat) => commit('statistiques/add_achat', achat));
         },
-        fetchAll({ commit }) {
-            return clientAchat.getAll().then(res => commit('fetching_success', res.data))
-        },
-        filter({ commit }, name) {
-            commit('filter', name);
+        filtreList({commit}, name) {
+            commit('filtreList', name);
         }
     }
 }

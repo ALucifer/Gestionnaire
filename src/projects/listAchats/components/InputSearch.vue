@@ -1,9 +1,8 @@
 <template>
   <div>
     <b-form-input
-            v-model="searchText"
+            v-model="searchWord"
             placeholder="Rechercher un achat"
-            @keyup="search"
             class="inputSearch">
     </b-form-input>
   </div>
@@ -11,15 +10,20 @@
 
 <script>
 export default {
-  name: "SearchModal",
+  name: "InputSearch",
   data() {
     return {
       searchText: ""
     };
   },
-  methods: {
-    search() {
-      this.$store.dispatch("achats/filter", this.searchText);
+  computed: {
+    searchWord: {
+      get() {
+        return this.$store.state.achats.filter;
+      },
+      set(value) {
+        this.$store.dispatch('achats/filtreList', value);
+      }
     }
   }
 };

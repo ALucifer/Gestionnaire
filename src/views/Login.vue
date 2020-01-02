@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <b-container class="pt-5">
         <b-row align-h="center">
             <b-col cols="5" class="container-login">
                 <div class="login-title">
@@ -24,14 +24,13 @@
                             :type="'password'"
                             placeholder="Password">
                     </b-input>
-                    <div class="my-1">
-                        <a href="">Mot de passe oublié ?</a>
-                        <b-button
-                                variant="success"
-                                @click="logUser"
-
-                        >
-                            <b-spinner v-if="isLoading" small></b-spinner>
+                    <div class="my-2">
+                        <a href="" class="display-inline-grid w-60">Mot de passe oublié ?</a>
+                        <b-button v-if="isLoading" class="w-40" variant="success" disabled>
+                            <b-spinner small type="grow"></b-spinner>
+                            Loading...
+                        </b-button>
+                        <b-button v-else variant="success" @click="logUser" class="display-inline-grid w-40">
                             Login
                         </b-button>
                     </div>
@@ -52,6 +51,9 @@
                 password: '',
                 submitted: false
             }
+        },
+        beforeCreate: function() {
+            document.body.className = 'login';
         },
         computed: {
             isLoading () {
@@ -75,14 +77,18 @@
     }
 </script>
 
-<style>
-    @import "../assets/css/login.css";
-    .title {
-        font-family: Poppins-Bold;
-        font-size: 30px;
-        color: #fff;
-        text-transform: uppercase;
-        line-height: 1.2;
-        text-align: center;
+<style scoped>
+@import "./../assets/css/login.css";
+    .display-inline-grid {
+        display: inline-grid;
+    }
+    .w-60 {
+        width: 60%;
+    }
+    .w-40 {
+        width: 40%;
+    }
+    .w-50 {
+        width: 50%;
     }
 </style>

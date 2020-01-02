@@ -102,6 +102,6 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        return [$this->token, $this->email];
+        return ["token" => $this->token, "username" => $this->email];
     }
 }

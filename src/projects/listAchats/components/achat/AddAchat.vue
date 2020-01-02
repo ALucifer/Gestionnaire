@@ -56,8 +56,8 @@
 </template>
 
 <script>
-import achatValidation from '../services/form/achatValidation';
-import BSelectItem from '../../../components/BSelectItem'
+import achatValidation from '../../services/form/achatValidation';
+import BSelectItem from '../../../../components/BSelectItem'
 
 export default {
   name: "AddAchat",
@@ -113,6 +113,12 @@ export default {
 </script>
 
 <style scoped>
+  .event-card {
+    padding: 10px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2), 0 1px 15px 0 rgba(0, 0, 0, 0.19);
+  }
   .error{
     color: red;
   }

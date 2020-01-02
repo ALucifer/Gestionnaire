@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import ListAchat from '../views/AchatList';
+import IndexListAchat from '../views/IndexAchatList';
 import Login from '../views/Login';
 
 Vue.use(VueRouter);
@@ -10,7 +10,7 @@ let router = new VueRouter({
     routes: [
         {
             path: '/list-achat',
-            component: ListAchat,
+            component: IndexListAchat,
             meta: { requiresAuth: true }
         },
         {

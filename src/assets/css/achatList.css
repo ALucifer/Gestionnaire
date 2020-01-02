@@ -1,25 +1,49 @@
+html,
+body.achatList {
+    height: 100%;
+    overflow: hidden;
+}
+div {
+    height: inherit;
+}
+
+.slide-fade-enter {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: all 0.2s ease;
+}
+
+.slide-fade-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
+}
+
 .top {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-  }
-  .bot {
+}
+.bot {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-bottom: 5px;
-  }
-  .achat-container {
+}
+.achat-container {
     margin: 5px;
     padding: 10px;
     margin-bottom: 1px;
     border: 1px solid grey;
-  }
-  
-  .slide-up-enter {
+}
+
+.slide-up-enter {
     transform: translateY(10px); /* start 10px down*/
     opacity: 0;
     transition: all 0.7s ease-out;
-  }
-  
-  .slide-up-enter-active {
+}
+
+.slide-up-enter-active {
     transition: all 0.7s ease-in-out;
-  }
+}

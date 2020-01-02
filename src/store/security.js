@@ -6,7 +6,8 @@ export default {
     state: {
         isLoading: false,
         errors: [],
-        token: null
+        token: null,
+        user: null
     },
     getters: {
         isLoading(state) {
@@ -17,6 +18,9 @@ export default {
         },
         isLogged(state) {
             return state.token;
+        },
+        getUsername(state) {
+            return state.user.username;
         }
     },
     mutations: {
@@ -24,8 +28,13 @@ export default {
           state.isLoading = true;
           state.errors = [];
         },
-        auth_success(state) {
-          state.isLoading = false;
+        auth_success(state, token) {
+            state.isLoading = false;
+            state.token = token;
+            localStorage.setItem('token', JSON.stringify(token));
+            axios.defaults.headers.common['Authorization'] = `Bearer ${
+                token
+            }`
         },
         auth_failed(state, errors) {
           state.isLoading = false;
@@ -42,16 +51,27 @@ export default {
             state.token = null;
             state.isLoading = false;
             state.errors = [];
-            localStorage.removeItem('token')
+            state.user = null;
+            localStorage.removeItem('token');
+        },
+        set_user_information(state, user) {
+            console.log(user)
+            state.user = user;
         }
     },
     actions: {
         async login({commit}, payload) {
             commit('auth_loading');
-            await securityClient.getToken(payload).then((res) => {
-                commit('auth_success');
-                commit('set_user_data', res.data.token);
-            }).catch(() => {
+            await securityClient
+                .getToken(payload)
+                .then((res) => {
+                    commit('auth_success',res.data.token);
+                })
+                .then(async () => {
+                    const user = await securityClient.getUser();
+                    commit('set_user_information', user.data);
+                })
+                .catch(() => {
                 commit('auth_failed', [{'message': 'Login ou mot de passe incorrect'}]);
             });
         },

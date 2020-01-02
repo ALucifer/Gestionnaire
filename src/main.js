@@ -19,22 +19,28 @@ new Vue({
   render: h => h(App),
   router: router,
   store: store,
-  created () {
-    const token = localStorage.getItem('token')
-    if (token) {
-      const userData = JSON.parse(token)
-      this.$store.commit('security/set_user_data', userData)
-    }
+    created: function () {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const userData = JSON.parse(token);
 
-    axios.interceptors.response.use(
-        response => response,
-        error => {
-          if (error.response.status === 401) {
-            this.$store.dispatch('security/logout');
-            this.$router.push('/login');
-          }
-          return Promise.reject(error)
+            this.$store.commit('security/set_user_data', userData);
         }
-    )
-  },
+
+        axios.interceptors.response.use(
+            response => response,
+            error => {
+                if (error.message === "Network Error") {
+                    this.$store.dispatch('security/logout');
+                    this.$router.push('/login');
+                    return ;
+                }
+                if (error.response.status === 401) {
+                    this.$store.dispatch('security/logout');
+                    this.$router.push('/login');
+                }
+                return Promise.reject(error)
+            }
+        )
+    },
 }).$mount('#app');

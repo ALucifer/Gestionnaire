@@ -1,9 +1,12 @@
 <?php
 namespace App\Controller;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SecurityController extends AbstractController
 {
@@ -19,6 +22,15 @@ class SecurityController extends AbstractController
             'email' => $user->getUsername(),
             'roles' => $user->getRoles(),
         ]);
+    }
+
+    /**
+     * @Route(name="api_get_user", path="/api/user", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getUserInfo(TokenStorageInterface $tokenStorageInterface)
+    {
+        return $this->json($tokenStorageInterface->getToken()->getUser()->eraseCredentials());
     }
 
 }

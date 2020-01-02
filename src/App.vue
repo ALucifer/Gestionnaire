@@ -1,11 +1,11 @@
 <template>
   <b-container fluid class="no-padding">
     <b-row no-gutters>
-      <b-col cols="2" class="d-none d-md-block" v-if="this.$store.getters['security/isLogged']">
+      <b-col cols="2" class="d-none d-md-block" v-if="isLogged">
         <Sidebar class="sidebar-container"></Sidebar>
       </b-col>
       <b-col>
-        <router-view class="p-3"></router-view>
+        <router-view></router-view>
       </b-col>
     </b-row>
   </b-container>
@@ -15,7 +15,12 @@
 import Sidebar from './components/Sidebar'
 export default {
   name: "app",
-  components: {Sidebar}
+  components: {Sidebar},
+  computed: {
+    isLogged() {
+      return this.$store.getters['security/isLogged'];
+    }
+  }
 };
 </script>
 

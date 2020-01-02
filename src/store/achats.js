@@ -35,11 +35,6 @@ export default {
                 state.filter = name;
                 state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name));
             }
-           /* state.filter = name;
-            var test = state.achats.filter(a => new RegExp(name).test(a.name));
-            console.log(name,test)*/
-
-            //state.filteredAchats = state.achats.filter(a => new RegExp(name).test(a.name))
         }
     },
     actions: {

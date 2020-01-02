@@ -6,5 +6,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 export default {
     getToken(payload) {
         return axios.post('login_check', payload);
+    },
+    getUser() {
+        return axios.get('user');
     }
 }

@@ -2,7 +2,7 @@
   <b-container fluid class="no-padding">
     <b-row no-gutters>
       <b-col cols="2" class="d-none d-md-block" v-if="isLogged">
-        <Sidebar class="sidebar-container"></Sidebar>
+        <Sidebar :links="links" class="sidebar-container"></Sidebar>
       </b-col>
       <b-col>
         <router-view></router-view>
@@ -19,6 +19,12 @@ export default {
   computed: {
     isLogged() {
       return this.$store.getters['security/isLogged'];
+    },
+    links() {
+      return [
+        {name: 'name1', link: 'http://www.google.fr'},
+        {name: 'name2', link: 'http://www.google.fr'},
+      ]
     }
   }
 };

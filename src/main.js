@@ -35,7 +35,9 @@ new Vue({
                     this.$router.push('/login');
                     return ;
                 }
-                if (error.response.status === 401) {
+
+                const statusRedirected = [401, 500];
+                if (statusRedirected.includes(error.response.status)) {
                     this.$store.dispatch('security/logout');
                     this.$router.push('/login');
                 }

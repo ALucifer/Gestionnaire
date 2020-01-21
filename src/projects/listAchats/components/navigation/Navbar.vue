@@ -27,7 +27,6 @@ export default {
     created() {
         security.getUser().then((user) => {
             this.$store.commit('security/set_user_information', user.data);
-
         });
     },
     methods: {

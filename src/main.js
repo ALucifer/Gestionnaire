@@ -2,23 +2,20 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store';
 import router from './router';
-import BootstraVue from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Vuelidate from 'vuelidate';
-import feather from 'vue-icon';
 import axios from 'axios';
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 
-Vue.use(BootstraVue);
 Vue.use(Vuelidate);
-Vue.use(feather, 'v-icon');
 
 new Vue({
-  render: h => h(App),
-  router: router,
-  store: store,
+    render: h => h(App),
+    router: router,
+    store: store,
+    vuetify,
+
     created: function () {
         const token = localStorage.getItem('token');
         if (token) {
@@ -44,5 +41,5 @@ new Vue({
                 return Promise.reject(error)
             }
         )
-    },
+    }
 }).$mount('#app');

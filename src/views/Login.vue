@@ -14,17 +14,27 @@
                                             label="Login"
                                             v-model="$v.email.$model"
                                             prepend-icon="mdi-account"
-                                            type="text"/>
+                                            type="text"
+                                            required
+                                            />
                                     <v-text-field
                                             label="Password"
                                             v-model="$v.password.$model"
                                             prepend-icon="mdi-lock"
-                                            type="password"/>
+                                            type="password"
+                                            required
+                                            />
                                 </v-form>
+                                <span v-if="errors" class="error">
+                                    Login / Mot de passe incorrect.
+                                </span>
+                                <span v-if="empty && isSubmitted" class="empty">
+                                    Merci de renseigner les champs requis pour valider le formulaire.
+                                </span>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer />
-                                <v-btn color="primary">Login</v-btn>
+                                <v-btn color="primary" @click.prevent="logUser">Login</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-col>
@@ -41,6 +51,9 @@
         name: "Login",
         data () {
             return {
+                empty: true,
+                errors: false,
+                isSubmitted: false,
                 email: '',
                 password: '',
                 submitted: false
@@ -63,10 +76,24 @@
         },
         methods: {
             logUser() {
-                this.submitted = true;
-                let payload = {username: this.$v.email.$model, password: this.$v.password.$model};
-                this.$store.dispatch('security/login', payload).then(() => this.$router.push('/'));
+                this.empty = !this.$v.$anyDirty;
+                this.errors = this.$v.$anyError;
+                this.isSubmitted = true;
+                if (this.errors === false && this.empty === false) {
+                    let payload = {username: this.$v.email.$model, password: this.$v.password.$model};
+                    this.$store.dispatch('security/login', payload).then(() => this.$router.push('/'));
+                }                
             }
         }
     }
 </script>
+
+<style scoped>
+.empty {
+  color: red;
+}
+.v-application .error {
+    background-color: white!important;
+    color: red;
+}
+</style>

@@ -24,21 +24,16 @@ class AchatController extends AbstractController
      * @Route("", name="index", methods={"GET"})
      *
      * @param AchatRepository $repository
-     * @param CategoryRepository $categoryRepository
+
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function index(AchatRepository $repository, CategoryRepository $categoryRepository)
+    public function index(AchatRepository $repository)
     {
         return $this->json(
-            ['achats' => $repository->findAll(), 'categories' => $categoryRepository ->findAll()],
+             $repository->findAll(),
             200,
-            [],
-            [
-                'circular_reference_handler' => function ($object) {
-                    return $object->getId();
-                }
-            ]
+            []
         );
     }
 

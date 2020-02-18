@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import IndexListAchat from '../views/IndexAchatList';
+import Achats from '../views/Achats';
+import AchatsIndex from '../views/Achats/Index';
+import AchatsAdd from '../views/Achats/Add';
 import Login from '../views/Login';
 
 Vue.use(VueRouter);
@@ -10,8 +12,24 @@ let router = new VueRouter({
     routes: [
         {
             path: '/list-achat',
-            component: IndexListAchat,
-            meta: { requiresAuth: true }
+            component: Achats,
+            meta: { requiresAuth: true },
+            children: [
+                {
+                    path: '',
+                    name: 'achatIndex',
+                    components: {
+                        children: AchatsIndex
+                    }
+                },
+                {
+                    path: 'new',
+                    name: 'achatAdd',
+                    components: {
+                        children: AchatsAdd
+                    }
+                }
+            ]
         },
         {
             path: '/login',

@@ -29,23 +29,11 @@ class FormValidateur
 
     public function post(Request $request)
     {
-        $achat = new Achat();
-        $form = $this->formFactory->create(AchatType::class, $achat);
+        $form = $this->formFactory->create(AchatType::class, new Achat());
 
-        $data = json_decode($request->getContent(), true)['form'];
-        $category = $this->saveCategory($data);
+        $form->handleRequest($request);
 
-        $form->submit($data);
-        if($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $data->setCategory($category);
-
-            $this->em->persist($data);
-            $this->em->flush();
-            return $data;
-        }
-
-        return $form->getErrors();
+        dump($form->isSubmitted());die;
     }
 
 
@@ -61,20 +49,5 @@ class FormValidateur
 
         $this->em->remove($achat);
         $this->em->flush();
-    }
-
-    private function saveCategory($data)
-    {
-        if(isset($data['category'])) {
-            $category = $this->em->getRepository(Category::class)->findOneBy(['label'=> $data['category']]);
-
-            if(!$category) {
-                $category = new Category();
-                $category->setLabel($data['category']);
-                $this->em->persist($category);
-            }
-            return $category;
-        }
-        return null;
     }
 }

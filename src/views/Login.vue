@@ -59,9 +59,6 @@
                 submitted: false
             }
         },
-        beforeCreate: function() {
-            document.body.className = 'login';
-        },
         computed: {
             isLoading () {
                 return this.$store.getters['security/isLoading'];
@@ -82,7 +79,7 @@
                 if (this.errors === false && this.empty === false) {
                     let payload = {username: this.$v.email.$model, password: this.$v.password.$model};
                     this.$store.dispatch('security/login', payload).then(() => this.$router.push('/'));
-                }                
+                }
             }
         }
     }

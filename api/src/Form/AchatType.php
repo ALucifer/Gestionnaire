@@ -6,8 +6,6 @@ use App\Entity\Achat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Category;
 
 class AchatType extends AbstractType
 {
@@ -18,17 +16,13 @@ class AchatType extends AbstractType
             ->add('price')
             ->add('isBuy')
             ->add('url')
-//            ->add('category', EntityType::class, [
-//                'class' => Category::class,
-//            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Achat::class,
-            'allow_extra_fields' => true
+            'data_class' => Achat::class
         ]);
     }
 }
